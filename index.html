@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="utf-8"> <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
+    <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
+    <title></title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+
+    <!-- Web Font / @font-face : BEGIN -->
+    <!-- NOTE: If web fonts are not required, lines 10 - 27 can be safely removed. -->
+
+    <!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
+    <!--[if mso]>
+        <style>
+            * {
+                font-family: sans-serif !important;
+            }
+        </style>
+    <![endif]-->
+
+    <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+    <!--[if !mso]><!-->
+    <!-- insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
+    <!--<![endif]-->
+
+    <!-- Web Font / @font-face : END -->
+
+    <!-- CSS Reset : BEGIN -->
+    <style>
+
+        /* What it does: Remove spaces around the email design added by some email clients. */
+        /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+        html,
+        body {
+            margin: 0 auto !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+        }
+        a {
+            text-decoration: none !important;
+        }
+
+        /* What it does: Stops email clients resizing small text. */
+        * {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* What it does: Centers email on Android 4.4 */
+        div[style*="margin: 16px 0"] {
+            margin: 0 !important;
+        }
+
+        /* What it does: Stops Outlook from adding extra spacing to tables. */
+        table,
+        td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
+
+        /* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */
+        table {
+            border-spacing: 0 !important;
+            border-collapse: collapse !important;
+            table-layout: fixed !important;
+            margin: 0 auto !important;
+        }
+        table table table {
+            table-layout: auto;
+        }
+
+        /* What it does: Uses a better rendering method when resizing images in IE. */
+        img {
+            -ms-interpolation-mode:bicubic;
+        }
+
+        /* What it does: A work-around for email clients meddling in triggered links. */
+        *[x-apple-data-detectors],  /* iOS */
+        .x-gmail-data-detectors,    /* Gmail */
+        .x-gmail-data-detectors *,
+        .aBn {
+            border-bottom: 0 !important;
+            cursor: default !important;
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* What it does: Prevents Gmail from displaying an download button on large, non-linked images. */
+        .a6S {
+           display: none !important;
+           opacity: 0.01 !important;
+       }
+       /* If the above doesn't work, add a .g-img class to any image in question. */
+       img.g-img + div {
+           display: none !important;
+       }
+
+       /* What it does: Prevents underlining the button text in Windows 10 */
+        .button-link {
+            text-decoration: none !important;
+        }
+
+        /* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+        /* Create one of these media queries for each additional viewport size you'd like to fix */
+        /* Thanks to Eric Lepetit (@ericlepetitsf) for help troubleshooting */
+        @media only screen and (min-device-width: 375px) and (max-device-width: 413px) { /* iPhone 6 and 6+ */
+            .email-container {
+                min-width: 375px !important;
+            }
+        }
+
+	    @media screen and (max-width: 480px) {
+	        /* What it does: Forces Gmail app to display email full width */
+	        div > u ~ div .gmail {
+		        min-width: 100vw;
+	        }
+		}
+
+    </style>
+    <!-- CSS Reset : END -->
+
+    <!-- Progressive Enhancements : BEGIN -->
+    <style>
+
+        /* What it does: Hover styles for buttons */
+        .button-td,
+        .button-a {
+            transition: all 100ms ease-in;
+        }
+        .button-td:hover,
+        .button-a:hover {
+            background: #555555 !important;
+            border-color: #555555 !important;
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 600px) {
+
+            .email-container {
+                width: 100% !important;
+                margin: auto !important;
+            }
+
+            /* What it does: Forces elements to resize to the full width of their container. Useful for resizing images beyond their max-width. */
+            .fluid {
+                max-width: 100% !important;
+                height: auto !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* What it does: Forces table cells into full-width rows. */
+            .stack-column,
+            .stack-column-center {
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                direction: ltr !important;
+            }
+            /* And center justify these ones. */
+            .stack-column-center {
+                text-align: center !important;
+            }
+
+            /* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */
+            .center-on-narrow {
+                text-align: center !important;
+                display: block !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                float: none !important;
+            }
+            table.center-on-narrow {
+                display: inline-block !important;
+            }
+
+            /* What it does: Adjust typography on small screens to improve readability */
+            .email-container p {
+                font-size: 17px !important;
+            }
+        }
+
+    </style>
+    <!-- Progressive Enhancements : END -->
+
+    <!-- What it does: Makes background images in 72ppi Outlook render at correct size. -->
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+
+</head>
+<body width="100%" bgcolor="#222222" style="margin: 0; mso-line-height-rule: exactly;">
+    <center style="width: 100%; background: #222222; text-align: left;">
+
+        <!-- Visually Hidden Preheader Text : BEGIN -->
+        <!-- Visually Hidden Preheader Text : END -->
+
+        <!-- Email Header : BEGIN -->
+        <!-- Email Header : END -->
+
+        <!-- Email Body : BEGIN -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="margin: auto;" class="email-container">
+
+            <!-- Hero Image, Flush : BEGIN -->
+            <tr>
+                <td bgcolor="#ffffff" align="center">
+                    <img src="https://drive.google.com/uc?id=1HkmTUOw56er8_D1jJbw6cEBoNqc3kk_4" width="600" height="" alt="alt_text" border="0" align="center" style="width: 100%; max-width: 600px; height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; margin: auto;" class="g-img">
+                </td>
+            </tr>
+            <!-- Hero Image, Flush : END -->
+
+            <!-- 1 Column Text + Button : BEGIN -->
+            <tr>
+                <td bgcolor="#ffffff" style="padding: 40px 40px 20px; text-align: center;">
+                    <h1 style="margin: 0; font-family: sans-serif; font-size: 24px; line-height: 125%; color: #333333; font-weight: normal;">Lecture Series</h1>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#ffffff" style="padding: 0 40px 40px; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; text-align: center;">
+                    <p style="margin: 0;">Being an entrepreneur brings in the galore of marmaladious chattel alongwith constituting of ups, downs, joys and disappointment, all of them being one of its kind. Now, how does it sound like to be listening and learning at each and every aspect of it and being cognizant with all its nitty gritties from the ones who themselves broke its ceiling in their own way? Adrenalating, right? No doubt, sometimes a little piece of advice or wisdom from a brilliant mind can help you motor through even the most difficult of times.
+                    Walking on the same ponder-steps, eSummit NSIT, 2018 is delighted to announce the lecture series bringing the best of the profound minds to all the wanterpreneurs out there!</p>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#ffffff" style="padding: 0 40px 40px; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                    <!-- Button : BEGIN -->
+		    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto">
+                        <tr>
+                            <td style="border-radius: 3px; background: #222222; text-align: center;" class="button-td">
+                                <a target="_blank" href="http://goo.gl/forms/ukJDKiaMWEPciu0I3" style="background: #222222; border: 15px solid #222222; font-family: sans-serif; font-size: 13px; line-height: 110%; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;" class="button-a">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ffffff;">Register Now</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- Button : END -->
+                </td>
+            </tr>
+            <!-- 1 Column Text + Button : END -->
+
+            <!-- Background Image with Text : BEGIN -->
+        <!-- Background Image with Text : END -->
+
+        <!-- 2 Even Columns : BEGIN -->
+        <!-- 2 Even Columns : END -->
+
+        <!-- 3 Even Columns : BEGIN -->
+        <tr>
+            <td bgcolor="#ffffff" align="center" valign="top" style="padding: 10px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                        <!-- Column : BEGIN -->
+                        <td width="33.33%" class="stack-column-center">
+                             <a target="_blank" href="https://www.linkedin.com/in/ajayshrivastava1/">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td bgcolor="#ffffff" style="padding: 0px 20px; text-align: center;">
+                                    <h1 style="margin: 0; font-family: sans-serif; font-size: 24px; line-height: 125%; color: #333333; font-weight: normal;">SERVICES</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center">
+                                        <img src="https://drive.google.com/uc?id=1U-E69A7wIynijAaKNg_wKdN6iPvEWyN4" width="170" height="170" alt="alt_text" border="0" class="fluid" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                        <p style="margin: 0; text-align: center;"><strong>AJAY SHRIVASTAVA</strong> <br>CTO, Knowlarity <br> Ex-CTO, OYO Rooms <br><i>Topic:  Design thinking and UI&UX </i></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            </a>
+                        </td>
+                        <!-- Column : END -->
+                        <!-- Column : BEGIN -->
+                        <td width="33.33%" class="stack-column-center">
+                            <a target="_blank" href="https://www.linkedin.com/in/bhavesh-manglani-14a3663">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td bgcolor="#ffffff" style="padding: 0px 20px; text-align: center;">
+                                    <h1 style="margin: 0; font-family: sans-serif; font-size: 24px; line-height: 125%; color: #333333; font-weight: normal;">LOGISTICS</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center">
+                                        <img src="https://drive.google.com/uc?id=1miMBQSqb361pizzjuKrcggePyaQUWN_U" width="170" height="170" alt="alt_text" border="0" class="fluid" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                        <p style="margin: 0; text-align: center;"><strong>BHAVESH MANGLANI</strong> <br>CO-FOUNDER DELHIVERY<br><i>Topic: Problems we face as we scale</i></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            </a>
+                        </td>
+                        <!-- Column : END -->
+                        <!-- Column : BEGIN -->
+                        <td width="33.33%" class="stack-column-center">
+                            <a target="_blank" href="https://www.linkedin.com/in/dinesh-homagai-89233914b">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td bgcolor="#ffffff" style="padding: 0px 20px; text-align: center;">
+                                    <h1 style="margin: 0; font-family: sans-serif; font-size: 24px; line-height: 125%; color: #333333; font-weight: normal;">INNOVATION IN FOOD</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center">
+                                        <img src="https://drive.google.com/uc?id=1Applf3jp_TYyEINCWLheEwVfKJNZwN6r" width="170" height="170" alt="alt_text" border="0" class="fluid" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                        <p style="margin: 0; text-align: center;"><strong>DINESH HOMAGAI</strong> <br>VP OPERATIONS, WOW MOMOS<br><i>Topic: Growth Hacking </i></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            </a>
+                        </td>
+                        <!-- Column : END -->
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- 3 Even Columns : END -->
+        <tr>
+            <td bgcolor="#ffffff" align="center" valign="top" style="padding: 10px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                        <!-- Column : BEGIN -->
+                        <td width="33.33%" class="stack-column-center">
+                            <a target="_blank" href="https://www.linkedin.com/in/prashant-tandon-2802a4/">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td bgcolor="#ffffff" style="padding: 0px 20px; text-align: center;">
+                                    <h1 style="margin: 0; font-family: sans-serif; font-size: 24px; line-height: 125%; color: #333333; font-weight: normal;">HEALTHCARE</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center">
+                                        <img src="https://drive.google.com/uc?id=1Nia8fvr1jyladIw6LhX7VpHEngufk3jA" width="170" height="170" alt="alt_text" border="0" class="fluid" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                        <p style="margin: 0; text-align: center;"><strong>PRASHANT TANDON</strong> <br>FOUNDER 1MG.COM<br><i>Topic: Building a startup that Indians love </i></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            </a>
+                        </td>
+                        <!-- Column : END -->
+                        <!-- Column : BEGIN -->
+                        <td width="33.33%" class="stack-column-center">
+                            <a target="_blank" href="https://www.linkedin.com/in/sanchitsethi1/">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td bgcolor="#ffffff" style="padding: 0px 20px; text-align: center;">
+                                    <h1 style="margin: 0; font-family: sans-serif; font-size: 24px; line-height: 125%; color: #333333; font-weight: normal;">HOTELS</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center">
+                                        <img src="https://drive.google.com/uc?id=1_1ko4-lDKz3cpxY2-ARJROOlFJYekvOZ" width="170" height="170" alt="alt_text" border="0" class="fluid" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                        <p style="margin: 0; text-align: center;"><strong>SANCHIT SETHI</strong> <br>FOUNDER STAYUNCLE<br><i>Topic: Emotional intelligence leads to more sales </i></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            </a>
+                        </td>
+                        <!-- Column : END -->
+                        <!-- Column : BEGIN -->
+                        <td width="33.33%" class="stack-column-center">
+                            <a target="_blank" href="https://www.linkedin.com/in/vinaymathews/">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td bgcolor="#ffffff" style="padding: 0px 20px; text-align: center;">
+                                    <h1 style="margin: 0; font-family: sans-serif; font-size: 24px; line-height: 125%; color: #333333; font-weight: normal;">FINTECH</h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center">
+                                        <img src="https://drive.google.com/uc?id=1Qpx1-RgEl-6OQz7juLOtLbaGyKtzP42y" width="170" height="170" alt="alt_text" border="0" class="fluid" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                        <p style="margin: 0; text-align: center;"><strong>VINAY MATHEWS</strong> <br>FOUNDER FAIRCENT.COM<br><i>Topic: 10 do's and don'ts for an entrepreneur</i></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            </a>
+                        </td>
+                        <!-- Column : END -->
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <!-- Thumbnail Left, Text Right : BEGIN -->
+        <!-- Thumbnail Left, Text Right : END -->
+
+        <!-- Thumbnail Right, Text Left : BEGIN -->
+        <!-- Thumbnail Right, Text Left : END -->
+
+        <!-- Clear Spacer : BEGIN -->
+        <tr>
+            <td aria-hidden="true" height="40" style="font-size: 0; line-height: 0;">
+                &nbsp;
+            </td>
+        </tr>
+        <!-- Clear Spacer : END -->
+
+                 <!-- 1 Column Text + Button : BEGIN -->
+            <tr>
+                <td bgcolor="#ffffff" style="padding: 40px 40px 20px; text-align: center;">
+                    <h1 style="margin: 0; font-family: sans-serif; font-size: 24px; line-height: 125%; color: #333333; font-weight: normal;">Instaseed - 10 min funding</h1>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#ffffff" style="padding: 0 40px 40px; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; text-align: center;">
+                    <p style="margin: 0;">Are you looking for feedback and expert advice on your business idea? Need some funding, incubation or acceleration assistance to take the next big step? 
+                    So come join us as we celebrate the spirit of following dreams and fulfilling visions!<br>
+
+                    Ready, set, pitch! “Instaseed - The 10 Minutes Funding” is an opportunity for budding startups to transform their innovative startup ideas into an accomplished venture. It is an initiative which seeks to encompass and transcend the boundaries of entrepreneurship by building a platform for new innovations, out-of-the box thinking and passionate ideas.<br>
+
+                    Each startup will get 10 minutes to pitch their breakthrough business concepts to a panel of investors, incubators and accelerators who then decide whether they want to invest in any of the enterprises or not. This is your game changing 10 minutes to fame. Make it count!<br>
+
+                    Who should attend?
+                    Entrepreneurs looking to kick start their ventures or anyone interested in innovation or investment opportunities.</p>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#ffffff" style="padding: 0 40px 40px; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                    <!-- Button : BEGIN -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto">
+                        <tr>
+                            <td style="border-radius: 3px; background: #222222; text-align: center;" class="button-td">
+                                <a target="_blank" href="http://ecellnsit.com/instaseed/" style="background: #222222; border: 15px solid #222222; font-family: sans-serif; font-size: 13px; line-height: 110%; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;" class="button-a">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ffffff;">Register Now</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- Button : END -->
+                </td>
+            </tr>
+            <!-- 1 Column Text + Button : END -->
+
+            <!-- Background Image with Text : BEGIN -->
+        <!-- Background Image with Text : END -->
+
+        <!-- 2 Even Columns : BEGIN -->
+        <!-- 2 Even Columns : END -->
+
+        <!-- 3 Even Columns : BEGIN -->
+        <tr>
+            <td bgcolor="#ffffff" align="center" valign="top" style="padding: 10px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                        <!-- Column : BEGIN -->
+                        <td width="33.33%" class="stack-column-center">
+                            <a target="_blank" href="https://www.linkedin.com/in/dr-sunil-k-shekhawat-54875a32/">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td style="padding: 10px; text-align: center">
+                                        <img src="https://drive.google.com/uc?id=1F13E44ABlKBwqOGd2YrUUlfZWkH98cxy" width="170" height="170" alt="alt_text" border="0" class="fluid" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                        <p style="margin: 0; text-align: center;"><strong>Dr. Sunil K Shekhawat</strong> <br>Regional Lead ( North ) - NASSCOM 10,000 Startups
+                                        <br></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            </a>
+                        </td>
+                        <!-- Column : END -->
+                        <!-- Column : BEGIN -->
+                        <td width="33.33%" class="stack-column-center">
+                            <a target="_blank" href="https://in.linkedin.com/in/ahujashivam">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td style="padding: 10px; text-align: center">
+                                        <img src="https://drive.google.com/uc?id=15L_dAWb_Xz9owCZnL0nNArqjFb0_W4Zf" width="170" height="170" alt="alt_text" border="0" class="fluid" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                        <p style="margin: 0; text-align: center;"><strong>Mr. Shivam Ahuja</strong> <br>CEO, Delhi Angels
+                                        <br></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            </a>
+                        </td>
+                        <!-- Column : END -->
+                        <!-- Column : BEGIN -->
+                        <td width="33.33%" class="stack-column-center">
+                            <a target="_blank" href="https://in.linkedin.com/in/sanjeevc">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td style="padding: 10px; text-align: center">
+                                        <img src="https://drive.google.com/uc?id=1UDfx1vxUenGrb5bh5J8cyHuA1udawNFW" width="170" height="170" alt="alt_text" border="0" class="fluid" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                        <p style="margin: 0; text-align: center;"><strong>Mr. Sanjeev Chopra</strong> <br>CEO, Electropreneur Park
+                                        <br></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            </a>
+                        </td>
+                        <!-- Column : END -->
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- 3 Even Columns : END -->
+        <tr>
+            <td bgcolor="#ffffff" align="center" valign="top" style="padding: 10px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                        <!-- Column : BEGIN -->
+                        <td width="50%" class="stack-column-center">
+                            <a target="_blank" href="https://in.linkedin.com/in/ridhish-talwar-189a428">
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td style="padding: 10px; text-align: center">
+                                        <img src="https://drive.google.com/uc?id=1C1eL_42xmW-vcPQtXjYpsbA9u7PaWYtg" width="170" height="170" alt="alt_text" border="0" class="fluid" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                        <p style="margin: 0; text-align: center;"><strong>Mr. Ridhish Talwar</strong> <br>Head - Programs at AdvantEdge
+                                        <br></p>
+                                    </td>
+                                </tr>
+                                </table>
+                            </a>
+                        </td>
+                        <!-- Column : END -->
+                        <!-- Column : BEGIN -->
+                        <td width="50%" class="stack-column-center">
+                            <a target="_blank" href="https://in.linkedin.com/in/abhijeetmalhotra">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td style="padding: 10px; text-align: center">
+                                        <img src="https://drive.google.com/uc?id=1xSEZQ8imtec6I7jG_kFFL-KJC1ZL-iBc" width="170" height="170" alt="alt_text" border="0" class="fluid" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 140%; color: #555555; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                        <p style="margin: 0; text-align: center;"><strong>Mr. Abhijeet Malhotra</strong> <br>Chapter Head (North), Lead Angels
+                                        <br></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            </a>
+                        </td>
+                        <!-- Column : END -->
+                        <!-- Column : BEGIN -->
+                        <!-- Column : END -->
+                    </tr>
+                </table>
+            </td>
+        </tr>
+   
+        <!-- 1 Column Text : BEGIN -->
+        <!-- 1 Column Text : END -->
+
+    </table>
+    <!-- Email Body : END -->
+
+    <!-- Full Bleed Background Section : BEGIN -->
+    <table role="presentation" bgcolor="black" cellspacing="0" cellpadding="0" border="0" align="center" width="600">
+            <tr>
+                <td valign="top" align="center">
+                    <div style="max-width: 680px; margin: auto;" class="email-container">
+                        <!--[if mso]>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="680" align="center">
+                        <tr>
+                        <td>
+                        <![endif]-->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr>
+                                <td style="padding: 10px; text-align: right; font-family: sans-serif; font-size: 15px; line-height: 140%; color: #ffffff;">
+                                    <img align="left" src="https://drive.google.com/uc?id=12-Zr4lMr8F4L_qP34ARYWK9cauOu2pH2" width="20px" height="20px">
+                                    <p style="margin: 0;">&copy; Ecell NSIT 2018</p>
+                                </td>
+                            </tr>
+                        </table>
+                        <!--[if mso]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+                    </div>
+                </td>
+            </tr>
+        </table>
+    <!-- Full Bleed Background Section : END -->
+
+    </center>
+</body>
+</html>
